@@ -3,74 +3,80 @@
 <head>
     <meta charset="utf-8">
     <title>Création de classe</title>
-    <!-- <link href="style_form.css" rel="stylesheet" type="text/css"> -->
+    <link href="UIClassCreation.css" rel="stylesheet" type="text/css">
     <script type="module" src="UIClassCreation.js"></script>
 </head>
 <body>
-    <button type="button" id="new_class_button">Nouvelle classe</button>
+    <button type="button" id="new_class_button">Nouvelle classe</button><br><br>
     <div id="class_creation_form" style="display: none;">
-        <form>
-            <label for="class_name">Nom de la classe :</label>
-            <input type="text" id="class_name" name="class_name"><br><br>
+        
+        <label for="class_name">Nom de la classe :</label>
+        <input type="text" id="class_name" name="class_name"><br><br>
 
-            <label for="remaining_points">Points restants :</label>
-            <span id="remaining_points">0</span><br><br>
+        <label for="remaining_points">Points restants :</label>
+        <span id="remaining_points">0</span><br><br>
 
-            <div id="strength_choice">
-                <button type="button" id="decrease_strength">-</button>
-                <label for="strength">Force : <span id="strength_value">0</span></label>
-                <button type="button" id="increase_strength">+</button>
-            </div>
+        <div id="strength_choice">
+            <button type="button" id="decrease_strength">-</button>
+            <label for="strength">Force : <span id="strength_value">0</span></label>
+            <button type="button" id="increase_strength">+</button>
+        </div>
 
-            <div id="magic_choice">
-                <button type="button" id="decrease_magic">-</button>
-                <label for="magic">Magie : <span id="magic_value">0</span></label>
-                <button type="button" id="increase_magic">+</button>
-            </div>
+        <div id="magic_choice">
+            <button type="button" id="decrease_magic">-</button>
+            <label for="magic">Magie : <span id="magic_value">0</span></label>
+            <button type="button" id="increase_magic">+</button>
+        </div>
 
-            <div id="luck_choice">
-                <button type="button" id="decrease_luck">-</button>
-                <label for="luck">Chance : <span id="luck_value">0</span></label>
-                <button type="button" id="increase_luck">+</button>
-            </div>
+        <div id="luck_choice">
+            <button type="button" id="decrease_luck">-</button>
+            <label for="luck">Chance : <span id="luck_value">0</span></label>
+            <button type="button" id="increase_luck">+</button>
+        </div>
 
-            <div id="sense_of_direction_choice">
-                <button type="button" id="decrease_sense_of_direction">-</button>
-                <label for="sense_of_direction">Sens de l'orientation : <span id="sense_of_direction_value">0</span></label>
-                <button type="button" id="increase_sense_of_direction">+</button>
-            </div>
+        <div id="sense_of_direction_choice">
+            <button type="button" id="decrease_sense_of_direction">-</button>
+            <label for="sense_of_direction">Sens de l'orientation : <span id="sense_of_direction_value">0</span></label>
+            <button type="button" id="increase_sense_of_direction">+</button>
+        </div>
 
-            <div id="health_choice">
-                <button type="button" id="decrease_health">-</button>
-                <label for="health">Santé : <span id="health_value">0</span></label>
-                <button type="button" id="increase_health">+</button>   
-            </div>
+        <div id="health_choice">
+            <button type="button" id="decrease_health">-</button>
+            <label for="health">Santé : <span id="health_value">0</span></label>
+            <button type="button" id="increase_health">+</button>   
+        </div>
 
-            <div id="hearing_choice">
-                <button type="button" id="decrease_hearing">-</button>
-                <label for="hearing">Ouïe : <span id="hearing_value">0</span></label>
-                <button type="button" id="increase_hearing">+</button>
-            </div>
+        <div id="hearing_choice">
+            <button type="button" id="decrease_hearing">-</button>
+            <label for="hearing">Ouïe : <span id="hearing_value">0</span></label>
+            <button type="button" id="increase_hearing">+</button>
+        </div>
 
-            <div id="stamina_choice">
-                <button type="button" id="decrease_stamina">-</button>
-                <label for="stamina">Endurance : <span id="stamina_value">0</span></label>
-                <button type="button" id="increase_stamina">+</button>
-            </div>
+        <div id="stamina_choice">
+            <button type="button" id="decrease_stamina">-</button>
+            <label for="stamina">Endurance : <span id="stamina_value">0</span></label>
+            <button type="button" id="increase_stamina">+</button>
+        </div>
 
-            <div id="load_choice">
-                <button type="button" id="decrease_load">-</button>
-                <label for="load">Charge : <span id="load_value">0</span></label>
-                <button type="button" id="increase_load">+</button>
-            </div>
+        <div id="load_choice">
+            <button type="button" id="decrease_load">-</button>
+            <label for="load">Charge : <span id="load_value">0</span></label>
+            <button type="button" id="increase_load">+</button>
+        </div>
 
-            <div id="leadership_choice">
-                <button type="button" id="decrease_leadership">-</button>
-                <label for="leadership">Leadership : <span id="leadership_value">0</span></label>
-                <button type="button" id="increase_leadership">+</button>
-            </div><br>
+        <div id="leadership_choice">
+            <button type="button" id="decrease_leadership">-</button>
+            <label for="leadership">Leadership : <span id="leadership_value">0</span></label>
+            <button type="button" id="increase_leadership">+</button>
+        </div><br>
 
-            <button id="create_class_button" type="button">Créer la classe</button>
-        </form>
+        <button id="create_class_button" type="button">Créer la classe</button>
+        <button id="modify_class_button" type="button" style="display: none;">Modifier la classe</button>
+        <button id="cancel_class_button" type="button">Annuler</button>
+    </div>
+    <div id="class_display_area">
+        <p>Classes créées :</p>
+    </div>
+        
 </body>
 </html>

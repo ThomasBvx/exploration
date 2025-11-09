@@ -37,4 +37,12 @@ export default class Player {
     static appendClass(classArray) {
         this.classes.push(classArray);
     }
+
+    static findClassByName(name) {
+        return this.classes.find(cls => cls.name === name);
+    }
+
+    static removeClassByName(name) {
+        this.classes = this.classes.filter(cls => cls.name !== name);
+    }
 }

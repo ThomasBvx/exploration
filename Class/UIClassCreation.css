@@ -1,0 +1,15 @@
+.toggle {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  transition: transform 0.2s;
+}
+.toggle.open {
+  transform: rotate(90deg);
+}
+
+.info {
+  margin-left: 1.5rem;
+  transition: opacity 0.2s;
+}
