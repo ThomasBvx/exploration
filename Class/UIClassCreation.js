@@ -42,6 +42,9 @@ let remaining_points_value;
 let old_class_name;
 let old_class_section = null;
 
+document.getElementById("nb_points_value").innerText = Player.getAttributePoints();
+document.getElementById("max_classes_value").innerText = Player.getNbClassAvailable();
+
 function modifyClass(className) {
     old_class_name = className;
 
@@ -101,7 +104,8 @@ function linkButtonsOfNewClass() {
         // avoid attaching multiple listeners to the same button
         if (btn.dataset.bound === "true") return;
         btn.addEventListener("click", () => {
-            const className = btn.dataset.className;
+            const parent = btn.closest(".section");
+            const className = parent.querySelector(".title").innerText;
             Player.removeClassByName(className);
             const parentSection = btn.closest(".section");
             parentSection.remove();
@@ -159,6 +163,10 @@ function addNewClassToDisplay(newClass) {
 }
 
 new_class_button.addEventListener("click", function() {
+    if(Player.nb_class_available <= Player.getClasses().length) {
+        alert("Le nombre maximum de classes a été atteint.");
+        return;
+    }
     class_creation_form.style.display = "";
     create_class_button.style.display = "";
     modify_class_button.style.display = "none";

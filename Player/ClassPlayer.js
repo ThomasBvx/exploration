@@ -1,4 +1,4 @@
-import Class from "../Class/ClassClass.js";
+// import Class from "../Class/ClassClass.js";
 
 export default class Player {
     static attribute_points = 10;

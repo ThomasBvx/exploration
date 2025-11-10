@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>CaveExplorer</title>
+    <link href="./Class/UIClassCreation.css" rel="stylesheet" type="text/css">
+    <script type="module" src="./Menu/UIMenu.js"></script>
+    <script type="module" src="./Class/UIClassCreation.js"></script>
+    <script type="module" src="./Camp/UICamp.js"></script>
+</head>
+<body>
+    <div id="menu">
+        <h3>Menu Principal</h3>
+        <button id="menu_classes_button">Classes</button>
+        <button id="menu_camp_button">Camp</button>
+        <button id="menu_expedition_button">Expédition</button>
+    </div><br><br>
+
+    <div id="class_tab" style="display: none;">   
+        <h2>Gestion des classes</h2>
+        <span id="nb_points_label">Points disponibles pour la création de la classe : </span>
+        <span id="nb_points_value">0</span><br><br>
+        <span id="max_classes_label">Nombre maximum de classes autorisées : </span>
+        <span id="max_classes_value">0</span><br><br>
+        <button type="button" id="new_class_button">Nouvelle classe</button><br><br>
+        <div id="class_creation_form" style="display: none;">
+            
+            <label for="class_name">Nom de la classe :</label>
+            <input type="text" id="class_name" name="class_name"><br><br>
+
+            <label for="remaining_points">Points restants :</label>
+            <span id="remaining_points">0</span><br><br>
+
+            <div id="strength_choice">
+                <button type="button" id="decrease_strength">-</button>
+                <label for="strength">Force : <span id="strength_value">0</span></label>
+                <button type="button" id="increase_strength">+</button>
+            </div>
+
+            <div id="magic_choice">
+                <button type="button" id="decrease_magic">-</button>
+                <label for="magic">Magie : <span id="magic_value">0</span></label>
+                <button type="button" id="increase_magic">+</button>
+            </div>
+
+            <div id="luck_choice">
+                <button type="button" id="decrease_luck">-</button>
+                <label for="luck">Chance : <span id="luck_value">0</span></label>
+                <button type="button" id="increase_luck">+</button>
+            </div>
+
+            <div id="sense_of_direction_choice">
+                <button type="button" id="decrease_sense_of_direction">-</button>
+                <label for="sense_of_direction">Sens de l'orientation : <span id="sense_of_direction_value">0</span></label>
+                <button type="button" id="increase_sense_of_direction">+</button>
+            </div>
+
+            <div id="health_choice">
+                <button type="button" id="decrease_health">-</button>
+                <label for="health">Santé : <span id="health_value">0</span></label>
+                <button type="button" id="increase_health">+</button>   
+            </div>
+
+            <div id="hearing_choice">
+                <button type="button" id="decrease_hearing">-</button>
+                <label for="hearing">Ouïe : <span id="hearing_value">0</span></label>
+                <button type="button" id="increase_hearing">+</button>
+            </div>
+
+            <div id="stamina_choice">
+                <button type="button" id="decrease_stamina">-</button>
+                <label for="stamina">Endurance : <span id="stamina_value">0</span></label>
+                <button type="button" id="increase_stamina">+</button>
+            </div>
+
+            <div id="load_choice">
+                <button type="button" id="decrease_load">-</button>
+                <label for="load">Charge : <span id="load_value">0</span></label>
+                <button type="button" id="increase_load">+</button>
+            </div>
+
+            <div id="leadership_choice">
+                <button type="button" id="decrease_leadership">-</button>
+                <label for="leadership">Leadership : <span id="leadership_value">0</span></label>
+                <button type="button" id="increase_leadership">+</button>
+            </div><br>
+
+            <button id="create_class_button" type="button">Créer la classe</button>
+            <button id="modify_class_button" type="button" style="display: none;">Modifier la classe</button>
+            <button id="cancel_class_button" type="button">Annuler</button>
+        </div>
+        <div id="class_display_area">
+            <p>Classes créées :</p>
+        </div>
+    </div>
+
+    <div id="camp_tab">
+        <h2>Camp</h2>
+        <div id="ressources_display_area">
+            <p>Ressources du camp :</p>
+            <span id="ressource_stick">Bâton : <span id="ressource_stick_value">0</span></span><br>
+            <span id="ressource_stone">Caillou : <span id="ressource_stone_value">0</span></span><br>
+            <span id="ressource_plank">Planche : <span id="ressource_plank_value">0</span></span><br>
+            <span id="ressource_metal_ore">Minerai de métal : <span id="ressource_metal_ore_value">0</span></span><br>
+            <span id="ressource_metal">Métal : <span id="ressource_metal_value">0</span></span><br>
+        </div>
+        <div id="tools_to_build_area">
+            <p>Outils à construire :</p>
+            <button id="build_oven_button" style="display: inline;" disabled>Construire un four<span id="build_oven_requirements"></span></button>
+            <button id="build_saw_button" style="display: inline;" disabled>Construire une scie<span id="build_saw_requirements"></span></button>
+            <button id="build_workshop_button" style="display: inline;" disabled>Construire un atelier<span id="build_workshop_requirements"></span></button>
+            <button id="build_house_button" style="display: inline;" disabled>Construire une maison<span id="build_house_requirements"></span></button>
+        </div>
+        <div id="tools_to_use_area">
+            <p>Outils disponibles :</p>
+            <button id="use_oven_button" style="display: inline;" disabled>Utiliser le four<span id="use_oven_requirements"></span></button>
+            <button id="use_saw_button" style="display: inline;" disabled>Utiliser la scie<span id="use_saw_requirements"></span></button>
+            <button id="use_workshop_button" style="display: inline;" disabled>Utiliser l'atelier<span id="use_workshop_requirements"></span></button>
+            <button id="use_house_button" style="display: inline;" disabled>Utiliser la maison<span id="use_house_requirements"></span></button>
+        </div>
+    </div>
+</body>
+</html>
