@@ -5,6 +5,7 @@ export default class Player {
     static nb_class_available = 1;
     static nb_human_per_class = 3;
     static classes = [];
+    static expeditions = [];
 
     static getAttributePoints() {
         return this.attribute_points;

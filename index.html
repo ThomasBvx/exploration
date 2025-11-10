@@ -7,6 +7,7 @@
     <script type="module" src="./Menu/UIMenu.js"></script>
     <script type="module" src="./Class/UIClassCreation.js"></script>
     <script type="module" src="./Camp/UICamp.js"></script>
+    <script type="module" src="./Expedition/UIExpedition.js"></script>
 </head>
 <body>
     <div id="menu">
@@ -117,6 +118,25 @@
             <button id="use_saw_button" style="display: inline;" disabled>Utiliser la scie<span id="use_saw_requirements"></span></button>
             <button id="use_workshop_button" style="display: inline;" disabled>Utiliser l'atelier<span id="use_workshop_requirements"></span></button>
             <button id="use_house_button" style="display: inline;" disabled>Utiliser la maison<span id="use_house_requirements"></span></button>
+        </div>
+    </div>
+
+    <div id="expedition_tab" style="display: none;">
+        <h2>Expédition</h2>
+        <span id="human_available_label">Nombre d'humains disponibles pour l'expédition : </span>
+        <span id="human_available_value">0</span><br><br>
+        <button id="create_expedition_button">Créer une nouvelle expédition</button><br><br>
+        <div id="expedition_creation_area" hidden>
+            <label for="expedition_name">Nom de l'expédition :</label>
+            <input type="text" id="expedition_name" name="expedition_name"><br><br>
+            <span id="human_remaining_label">Humains restants : <span id="human_remaining_value"></span></span>
+            <div id="existing_classes">
+                <div id="mage">
+                    <button type="button" id="decrease_strength">-</button>
+                    <label for="strength">Mage : <span id="strength_value">0</span></label>
+                    <button type="button" id="increase_strength">+</button>
+                </div>
+            </div>
         </div>
     </div>
 </body>
