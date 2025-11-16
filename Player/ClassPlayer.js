@@ -2,7 +2,7 @@
 
 export default class Player {
     static attribute_points = 10;
-    static nb_class_available = 1;
+    static nb_class_available = 3;
     static nb_human_per_class = 3;
     static classes = [];
     static expeditions = [];
