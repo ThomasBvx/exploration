@@ -41,7 +41,7 @@ export default class Expedition {
     }
 
     *startExpedition() {
-        yield "end"
+        yield "Debut de l'expedition..."
         while(this.energy > 0) {
             yield "test"
             this.energy -= 1; // Example energy consumption

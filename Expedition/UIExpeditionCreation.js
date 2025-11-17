@@ -104,9 +104,11 @@ document.getElementById("start_expedition_button").addEventListener("click", () 
     let expeditionLog = expedition.startExpedition();
     document.getElementById("expedition_log").value = "";
     let txt = expeditionLog.next();
-    while(txt !== "end") {
+    while(txt.value !== "end") {
         document.getElementById("expedition_log").value += txt.value + "\n";
         txt = expeditionLog.next();
+        console.log(txt);
+        console.log(expedition.energy);
     }
     document.getElementById("expedition_log").value += "Expedition ended.\n";
     Player.expeditionRunning = false;
