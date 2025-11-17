@@ -7,7 +7,7 @@
     <script type="module" src="./Menu/UIMenu.js"></script>
     <script type="module" src="./Class/UIClassCreation.js"></script>
     <script type="module" src="./Camp/UICamp.js"></script>
-    <script type="module" src="./Expedition/UIExpedition.js"></script>
+    <script type="module" src="./Expedition/UIExpeditionCreation.js"></script>
 </head>
 <body>
     <div id="menu">
@@ -95,7 +95,7 @@
         </div>
     </div>
 
-    <div id="camp_tab">
+    <div id="camp_tab" style="display: none;">
         <h2>Camp</h2>
         <div id="ressources_display_area">
             <p>Ressources du camp :</p>
@@ -121,18 +121,21 @@
         </div>
     </div>
 
-    <div id="expedition_tab" style="display: none;">
+    <div id="expedition_tab" style="display: block;">
         <h2>Expédition</h2>
         <span id="human_available_label">Nombre d'humains disponibles pour l'expédition : </span>
         <span id="human_available_value">0</span><br><br>
         <button id="create_expedition_button">Créer une nouvelle expédition</button><br><br>
         <div id="expedition_creation_area" hidden>
-            <label for="expedition_name">Nom de l'expédition :</label>
-            <input type="text" id="expedition_name" name="expedition_name"><br><br>
+            <span>Expedition n°<span id="new_expedition_number"></span></span><br><br>
             <span id="human_remaining_label">Humains restants : <span id="human_remaining_value"></span></span>
             <div id="existing_classes"></div>
         </div><br>
         <button id="start_expedition_button" style="display: none;">Démarrer l'expédition</button>
+        <div id="expedition_in_progress" style="display: none;">
+            <span id="expedition_journal">Journal de l'expédition n°<span id="current_expedition_number"></span></span><br>
+            <textarea id="expedition_log" rows="10" cols="50" readonly></textarea>
+        </div>
     </div>
 </body>
 </html>

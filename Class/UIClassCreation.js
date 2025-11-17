@@ -440,3 +440,7 @@ minus_leadership.addEventListener("click", function() {
     }
 });
 
+
+let classTest = new Class("mage", 0, 8, 0, 0, 0, 0, 0, 0, 0);
+Player.appendClass(classTest);
+addNewClassToDisplay(classTest);

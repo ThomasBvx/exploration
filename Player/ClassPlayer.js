@@ -6,6 +6,7 @@ export default class Player {
     static nb_human_per_class = 3;
     static classes = [];
     static expeditions = [];
+    static expeditionRunning = false;
 
     static getAttributePoints() {
         return this.attribute_points;
@@ -45,5 +46,17 @@ export default class Player {
 
     static removeClassByName(name) {
         this.classes = this.classes.filter(cls => cls.name !== name);
+    }
+
+    static appendExpedition(expeditionInstance) {
+        this.expeditions.push(expeditionInstance);
+    }
+
+    static getExpeditions() {
+        return this.expeditions;
+    }
+
+    static getExpeditionById(id) {
+        return this.expeditions.find(exp => exp.id === id);
     }
 }
