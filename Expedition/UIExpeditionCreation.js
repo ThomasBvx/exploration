@@ -3,8 +3,8 @@ import Expedition from "./ClassExpedition.js";
 
 function updateExpeditionCreationUI() {
     document.getElementById("human_available_value").innerText = Player.getNbHumanPerClass();
-    document.getElementById("new_expedition_number").innerText = Expedition.num.toString();
-    document.getElementById("current_expedition_number").innerText = (Expedition.num - 1).toString();
+    document.getElementById("new_expedition_number").innerText = Expedition.current_expedition_number.toString();
+    document.getElementById("current_expedition_number").innerText = (Expedition.current_expedition_number - 1).toString();
 }
 
 updateExpeditionCreationUI();
@@ -23,6 +23,7 @@ document.getElementById("create_expedition_button").addEventListener("click", ()
 
     document.getElementById("start_expedition_button").style.display = "block";
     document.getElementById("create_expedition_button").hidden = true;
+    document.getElementById("expedition_in_progress").style.display = "none";
 
     document.getElementById("expedition_creation_area").hidden = false;
     let nbHumansRemaining = Player.getNbHumanPerClass();
@@ -101,17 +102,31 @@ document.getElementById("start_expedition_button").addEventListener("click", () 
     document.getElementById("expedition_in_progress").style.display = "block";
     updateExpeditionCreationUI();
 
+    expedition.populateEvents();
     let expeditionLog = expedition.startExpedition();
     document.getElementById("expedition_log").value = "";
-    let txt = expeditionLog.next();
-    while(txt.value !== "end") {
-        document.getElementById("expedition_log").value += txt.value + "\n";
-        txt = expeditionLog.next();
-        console.log(txt);
-        console.log(expedition.energy);
-    }
-    document.getElementById("expedition_log").value += "Expedition ended.\n";
-    Player.expeditionRunning = false;
+    // Use async/await with a delay Promise so the event loop isn't blocked.
+    const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    (async function consumeExpeditionLog(gen) {
+        while (true) {
+            const res = gen.next();
+            // If generator finished or explicit end marker, finalize
+            if (res.done || res.value === "end") {
+                document.getElementById("expedition_log").value += "Expedition ended.\n";
+                Player.expeditionRunning = false;
+                updateExpeditionCreationUI();
+                break;
+            }
+
+            // Append the current log entry and show current energy
+            document.getElementById("expedition_log").value += res.value + "\n";
+            console.log("energy: " + expedition.getEnergy());
+
+            // Wait 1s before processing next entry
+            await delay(1000);
+        }
+    })(expeditionLog);
     // document.getElementById("expedition_in_progress").style.display = "none";
 });
 
