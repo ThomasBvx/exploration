@@ -84,8 +84,7 @@ export default class Expedition {
             }
 
         }
-        this.processRessourcesAtReturn();
-        yield "end"
+        yield "failed"
     }
 
     addRessource(ressource, quantity) {

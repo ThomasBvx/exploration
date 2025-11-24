@@ -93,8 +93,6 @@ function waitForAnyButton(buttonIds) {
                     document.getElementById(otherId)
                             .removeEventListener("click", handlers[otherId]);
                 });
-
-                // Résoudre en renvoyant le bouton pressé
                 resolve(id);
             };
 
@@ -121,55 +119,61 @@ document.getElementById("start_expedition_button").addEventListener("click", () 
     Player.appendExpedition(expedition);
     Player.expeditionRunning = true;
 
-    // Reset UI
     document.getElementById("existing_classes").innerHTML = "";
     document.getElementById("expedition_creation_area").hidden = true;
-    // document.getElementById("create_expedition_button").hidden = true;
     document.getElementById("start_expedition_button").style.display = "none";
     document.getElementById("expedition_in_progress").style.display = "block";
     updateExpeditionCreationUI();
 
+    const expedition_log = document.getElementById("expedition_log");
+    const continue_expedition_button = document.getElementById("continue_expedition_button");
+    const end_expedition_button = document.getElementById("end_expedition_button");
+
     expedition.populateEvents();
     let expeditionLog = expedition.startExpedition();
-    document.getElementById("expedition_log").value = "";
-    // Use async/await with a delay Promise so the event loop isn't blocked.
+    expedition_log.value = "";
+
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
     (async function consumeExpeditionLog(gen) {
         while (true) {
             const res = gen.next();
-            // If generator finished or explicit end marker, finalize
-            if (res.done || res.value === "end") {
-                document.getElementById("expedition_log").value += "Expedition ended.\n";
+
+            if (res.done || res.value === "failed") {
+                const successMessage = expedition.endExpedition();
+                expedition_log.value += "\n" + successMessage + "\n";
+                expedition_log.scrollTop = expedition_log.scrollHeight;
                 Player.expeditionRunning = false;
+                continue_expedition_button.style.display = "none";
+                end_expedition_button.style.display = "none";
                 updateExpeditionCreationUI();
                 break;
             }
 
-            // Append the current log entry and show current energy
-            document.getElementById("expedition_log").value += res.value + "\n";
-            console.log("energy: " + expedition.getEnergy());
+            expedition_log.value += res.value + "\n";
+            expedition_log.scrollTop = expedition_log.scrollHeight;
+            // console.log("energy: " + expedition.getEnergy());
 
-            // Wait 1s before processing next entry
-            if(res.value === EmptyEvent.prototype.log_message) {
+            if(res.value === new EmptyEvent(this, 1).log_message || res.value === "Debut de l'expedition...") {
+                continue_expedition_button.style.display = "none";
+                end_expedition_button.style.display = "none  ";
                 await delay(500);
             } else {
-                document.getElementById("continue_expedition_button").style.display = "block";
-                document.getElementById("end_expedition_button").style.display = "block";
+                continue_expedition_button.style.display = "inline";
+                end_expedition_button.style.display = "inline";
                 const pressed = await waitForAnyButton(["continue_expedition_button", "end_expedition_button"]);
                 if(pressed === "end_expedition_button") {
-                    successMessage = expedition.endExpedition();
-                    document.getElementById("expedition_log").value += successMessage + "\n";
+                    const successMessage = expedition.endExpedition();
+                    expedition_log.value += "\n" + successMessage + "\n";
+                    expedition_log.scrollTop = expedition_log.scrollHeight;
                     Player.expeditionRunning = false;
+                    continue_expedition_button.style.display = "none";
+                    end_expedition_button.style.display = "none";
                     updateExpeditionCreationUI();
                     break;
                 }
-                document.getElementById("continue_expedition_button").style.display = "none";
-                document.getElementById("end_expedition_button").style.display = "none";
             }
         }
     })(expeditionLog);
-    // document.getElementById("expedition_in_progress").style.display = "none";
-    // document.getElementById("create_expedition_button").hidden = false;
 });
 
