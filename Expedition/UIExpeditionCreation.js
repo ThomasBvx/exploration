@@ -26,6 +26,7 @@ document.getElementById("create_expedition_button").addEventListener("click", ()
     document.getElementById("start_expedition_button").style.display = "block";
     document.getElementById("create_expedition_button").hidden = true;
     document.getElementById("expedition_in_progress").style.display = "none";
+    document.getElementById("ressources_of_expedition").innerHTML = ``;
 
     document.getElementById("expedition_creation_area").hidden = false;
     let nbHumansRemaining = Player.getNbHumanPerExpedition();
@@ -128,6 +129,7 @@ document.getElementById("start_expedition_button").addEventListener("click", () 
     const expedition_log = document.getElementById("expedition_log");
     const continue_expedition_button = document.getElementById("continue_expedition_button");
     const end_expedition_button = document.getElementById("end_expedition_button");
+    const ressources_of_expedition = document.getElementById("ressources_of_expedition");
 
     expedition.populateEvents();
     let expeditionLog = expedition.startExpedition();
@@ -161,6 +163,14 @@ document.getElementById("start_expedition_button").addEventListener("click", () 
             } else {
                 continue_expedition_button.style.display = "inline";
                 end_expedition_button.style.display = "inline";
+                ressources_of_expedition.innerHTML=``;
+                for(const [ressource, quantity] of expedition.ressources_collected){
+                    if(ressource === "human"){
+                        const ressource_div = document.createElement("div");
+                        ressource_div.innerHTML=`Humain : ${quantity}`;
+                        ressources_of_expedition.appendChild(ressource_div);
+                    }
+                }
                 const pressed = await waitForAnyButton(["continue_expedition_button", "end_expedition_button"]);
                 if(pressed === "end_expedition_button") {
                     const successMessage = expedition.endExpedition();
@@ -175,5 +185,10 @@ document.getElementById("start_expedition_button").addEventListener("click", () 
             }
         }
     })(expeditionLog);
+});
+
+document.getElementById("toggle_ressources_of_expedition").addEventListener("click", () => {
+    document.getElementById("toggle_ressources_of_expedition").classList.toggle("open");
+    document.getElementById("ressources_of_expedition").hidden = !document.getElementById("ressources_of_expedition").hidden;
 });
 

@@ -86,7 +86,7 @@ function modifyClass(className) {
 }
 
 function linkButtonsOfNewClass() {
-    const buttons = document.querySelectorAll(".toggle");
+    const buttons = document.querySelectorAll("#class_display_area .toggle");
     const delete_buttons = document.querySelectorAll(".delete_class_button");
     const modify_buttons = document.querySelectorAll(".modify_class_button");
 

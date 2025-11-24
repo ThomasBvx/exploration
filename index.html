@@ -134,9 +134,13 @@
         <button id="start_expedition_button" style="display: none;">Démarrer l'expédition</button>
         <div id="expedition_in_progress" style="display: none;">
             <span id="expedition_journal">Journal de l'expédition n°<span id="current_expedition_number"></span></span><br>
-            <textarea id="expedition_log" rows="10" cols="120" readonly></textarea><br>
+            <textarea id="expedition_log" rows="10" cols="120" readonly></textarea><br><br>
             <button id="continue_expedition_button">Continuer</button>
-            <button id="end_expedition_button">Rentrer</button>
+            <button id="end_expedition_button">Rentrer</button><br><br>
+            <button class="toggle" id="toggle_ressources_of_expedition">▶</button>
+            <p style="display: inline;">Ressources récoltées</p>
+            <div id="ressources_of_expedition" class="info" hidden>
+            </div>
         </div>
     </div>
 </body>
