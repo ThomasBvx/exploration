@@ -3,7 +3,11 @@
 export default class Player {
     static attribute_points = 10;
     static nb_class_available = 3;
-    static nb_human_per_class = 3;
+    static nb_human_per_expedition = 3;
+
+    static hard_cap_attribute_points = 100;
+    static hard_cap_nb_class_available = 10;
+    static hard_cap_nb_human_per_expedition = 20;
     static classes = [];
     static expeditions = [];
     static expeditionRunning = false;
@@ -24,12 +28,12 @@ export default class Player {
         this.nb_class_available = nb;
     }
 
-    static getNbHumanPerClass() {
-        return this.nb_human_per_class;
+    static getNbHumanPerExpedition() {
+        return this.nb_human_per_expedition;
     }
 
-    static setNbHumanPerClass(nb) {
-        this.nb_human_per_class = nb;
+    static setNbHumanPerExpedition(nb) {
+        this.nb_human_per_expedition = nb;
     }
 
     static getClasses() {

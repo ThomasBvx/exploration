@@ -1,12 +1,16 @@
 import Event from "./Events/ClassEvent.js";
-import HumanEvent from "./Events/ClassHumanEvent.js";
+import HumanEvent from "./Events/SpecialRessource/ClassHumanEvent.js";
 import EmptyEvent from "./Events/ClassEmptyEvent.js";
+import Player from "../Player/ClassPlayer.js";
+import SpecialRessourceEvent from "./Events/SpecialRessource/ClassSpecialRessourceEvent.js";
 
 export default class Expedition {
     class_map = new Map();
     static current_expedition_number = 0;
     energy = 10;
     events_probability_map = new Map();
+    ressources_collected = new Map();
+    energy_used = 0;
 
     constructor(class_map) {
         this.id = Expedition.current_expedition_number;
@@ -23,7 +27,7 @@ export default class Expedition {
     }
 
     populateEvents() {
-        let possible_events = [new HumanEvent(this, 0.2), new EmptyEvent(this, 0.8)];
+        let possible_events = [new SpecialRessourceEvent(this, 0.2), new EmptyEvent(this, 0.8)];
         for (let event of possible_events) {
             let range_start = 0;
             for (let [range, existing_event] of this.events_probability_map.entries()) {
@@ -31,7 +35,7 @@ export default class Expedition {
             }
             this.events_probability_map.set([range_start, range_start + event.probability], event);
         }
-        console.log(this.events_probability_map);
+        // console.log(this.events_probability_map);
         // this.events_probability_map.set([0,1], new HumanEvent(this));
     }
     
@@ -80,6 +84,35 @@ export default class Expedition {
             }
 
         }
+        this.processRessourcesAtReturn();
         yield "end"
+    }
+
+    addRessource(ressource, quantity) {
+        if (this.ressources_collected.has(ressource)) {
+            let currentQuantity = this.ressources_collected.get(ressource);
+            this.ressources_collected.set(ressource, currentQuantity + quantity);
+        } else {
+            this.ressources_collected.set(ressource, quantity);
+        }
+    }
+
+    endExpedition() {
+        if(this.energy >= this.energy_used) {
+            this.processRessourcesAtReturn();
+            return "L'expedition a réussi à rentrer au camp! Les ressources récoltées sont maintenant disponibles.";
+        } else {
+            return "L'expedition n'a plus aucune énergie pour avancer... Les ressources récoltées sont perdues.";
+        }
+    }
+
+    processRessourcesAtReturn() {
+        for (let [ressource, quantity] of this.ressources_collected.entries()) {
+            if (ressource === "human") {
+                // Assuming Player has a method to add humans
+                Player.setNbHumanPerExpedition(Player.getNbHumanPerExpedition() + quantity);
+            }
+            // Handle other ressources if needed
+        }
     }
 }

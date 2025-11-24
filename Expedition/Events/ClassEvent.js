@@ -11,6 +11,7 @@ export default class Event{
     }
 
     useEnergy(){
+        this.expedition_associated.energy_used += this.energy_cost;
         this.expedition_associated.setEnergy(this.expedition_associated.getEnergy() - this.energy_cost);
     }
 

@@ -1,6 +1,6 @@
-import Event from "./ClassEvent.js";
-import Expedition from "../ClassExpedition.js";
-import Player from "../../Player/ClassPlayer.js";
+import Event from "../ClassEvent.js";
+import Expedition from "../../ClassExpedition.js";
+import Player from "../../../Player/ClassPlayer.js";
 
 export default class HumanEvent extends Event {
 
@@ -14,7 +14,7 @@ export default class HumanEvent extends Event {
     }
 
     applyEvent(){
-        Player.setNbHumanPerClass(Player.getNbHumanPerClass() + 1);
+        this.expedition_associated.addRessource("human", 1);
         this.useEnergy();
         return this.getLogMessage();
     }
