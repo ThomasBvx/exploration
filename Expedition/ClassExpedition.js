@@ -76,7 +76,6 @@ export default class Expedition {
         yield "Debut de l'expedition..."
         while(this.energy > 0) {
             const event = this.generateEvent();
-            // console.log(event);
             if (event) {
                 yield event.applyEvent();
             } else {
