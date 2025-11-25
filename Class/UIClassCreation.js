@@ -42,8 +42,12 @@ let remaining_points_value;
 let old_class_name;
 let old_class_section = null;
 
-document.getElementById("nb_points_value").innerText = Player.getAttributePoints();
-document.getElementById("max_classes_value").innerText = Player.getNbClassAvailable();
+export function initializeUI() {
+    document.getElementById("nb_points_value").innerText = Player.getAttributePoints();
+    document.getElementById("max_classes_value").innerText = Player.getNbClassAvailable();
+}
+
+initializeUI();
 
 function modifyClass(className) {
     old_class_name = className;

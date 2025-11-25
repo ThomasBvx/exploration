@@ -2,7 +2,7 @@ import Event from "../ClassEvent.js";
 import Expedition from "../../ClassExpedition.js";
 import Player from "../../../Player/ClassPlayer.js";
 
-export default class AttributePoint extends Event {
+export default class AttributePointEvent extends Event {
 
     constructor(expedition_associated, probability){
         super();

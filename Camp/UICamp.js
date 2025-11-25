@@ -171,7 +171,7 @@ document.getElementById('use_saw_button').addEventListener('click', () => {
     updateUI();
 });
 
-function updateUI() {
+export function updateUI() {
     updateRessourcesDisplay();
     updateBuildButtons();
     updateButtonsVisibility();

@@ -2,7 +2,7 @@ import Player from "../Player/ClassPlayer.js";
 import Expedition from "./ClassExpedition.js";
 import EmptyEvent from "./Events/ClassEmptyEvent.js";
 
-function updateExpeditionCreationUI() {
+export function updateExpeditionCreationUI() {
     document.getElementById("human_available_value").innerText = Player.getNbHumanPerExpedition();
     document.getElementById("new_expedition_number").innerText = Expedition.current_expedition_number.toString();
     document.getElementById("current_expedition_number").innerText = (Expedition.current_expedition_number - 1).toString();
@@ -27,10 +27,11 @@ document.getElementById("create_expedition_button").addEventListener("click", ()
     document.getElementById("create_expedition_button").hidden = true;
     document.getElementById("expedition_in_progress").style.display = "none";
     document.getElementById("ressources_of_expedition").innerHTML = ``;
-
     document.getElementById("expedition_creation_area").hidden = false;
+
     let nbHumansRemaining = Player.getNbHumanPerExpedition();
     document.getElementById("human_remaining_value").innerText = nbHumansRemaining;
+    document.getElementById("existing_classes").innerHTML = "";
     for(const classInstance of Player.getClasses()) {
         let classDiv = document.createElement("div");
         classDiv.id = `${classInstance.name}_choice_div`;
@@ -137,24 +138,48 @@ document.getElementById("start_expedition_button").addEventListener("click", () 
 
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
+    function expeditionFinished(){
+        const successMessage = expedition.endExpedition();
+        expedition_log.value += "\n" + successMessage + "\n";
+        expedition_log.scrollTop = expedition_log.scrollHeight;
+        Player.expeditionRunning = false;
+        continue_expedition_button.style.display = "none";
+        end_expedition_button.style.display = "none";
+        updateExpeditionCreationUI();
+    }
+
+    function displayRessources(){
+        ressources_of_expedition.innerHTML=``;
+        for(const [ressource, quantity] of expedition.ressources_collected){
+            if(ressource === "human"){
+                const ressource_human_div = document.createElement("div");
+                ressource_human_div.innerHTML=`Humain : ${quantity}`;
+                ressources_of_expedition.appendChild(ressource_human_div);
+            }
+            if(ressource === "attribute_point"){
+                const ressource_attribute_point_div = document.createElement("div");
+                ressource_attribute_point_div.innerHTML=`Point d'attribut : ${quantity}`;
+                ressources_of_expedition.appendChild(ressource_attribute_point_div);
+            }
+            if(ressource === "class"){
+                const ressource_class_div = document.createElement("div");
+                ressource_class_div.innerHTML=`Classe : ${quantity}`;
+                ressources_of_expedition.appendChild(ressource_class_div);
+            }
+        }
+    }
+
     (async function consumeExpeditionLog(gen) {
         while (true) {
             const res = gen.next();
 
             if (res.done || res.value === "failed") {
-                const successMessage = expedition.endExpedition();
-                expedition_log.value += "\n" + successMessage + "\n";
-                expedition_log.scrollTop = expedition_log.scrollHeight;
-                Player.expeditionRunning = false;
-                continue_expedition_button.style.display = "none";
-                end_expedition_button.style.display = "none";
-                updateExpeditionCreationUI();
+                expeditionFinished();
                 break;
             }
 
             expedition_log.value += res.value + "\n";
             expedition_log.scrollTop = expedition_log.scrollHeight;
-            // console.log("energy: " + expedition.getEnergy());
 
             if(res.value === new EmptyEvent(this, 1).log_message || res.value === "Debut de l'expedition...") {
                 continue_expedition_button.style.display = "none";
@@ -163,23 +188,10 @@ document.getElementById("start_expedition_button").addEventListener("click", () 
             } else {
                 continue_expedition_button.style.display = "inline";
                 end_expedition_button.style.display = "inline";
-                ressources_of_expedition.innerHTML=``;
-                for(const [ressource, quantity] of expedition.ressources_collected){
-                    if(ressource === "human"){
-                        const ressource_div = document.createElement("div");
-                        ressource_div.innerHTML=`Humain : ${quantity}`;
-                        ressources_of_expedition.appendChild(ressource_div);
-                    }
-                }
+                displayRessources();
                 const pressed = await waitForAnyButton(["continue_expedition_button", "end_expedition_button"]);
                 if(pressed === "end_expedition_button") {
-                    const successMessage = expedition.endExpedition();
-                    expedition_log.value += "\n" + successMessage + "\n";
-                    expedition_log.scrollTop = expedition_log.scrollHeight;
-                    Player.expeditionRunning = false;
-                    continue_expedition_button.style.display = "none";
-                    end_expedition_button.style.display = "none";
-                    updateExpeditionCreationUI();
+                    expeditionFinished();
                     break;
                 }
             }

@@ -7,7 +7,7 @@ import SpecialRessourceEvent from "./Events/SpecialRessource/ClassSpecialRessour
 export default class Expedition {
     class_map = new Map();
     static current_expedition_number = 0;
-    energy = 10;
+    energy = 100;
     events_probability_map = new Map();
     ressources_collected = new Map();
     energy_used = 0;
@@ -27,7 +27,7 @@ export default class Expedition {
     }
 
     populateEvents() {
-        let possible_events = [new SpecialRessourceEvent(this, 0.2), new EmptyEvent(this, 0.8)];
+        let possible_events = [new SpecialRessourceEvent(this, Player.probas_ressource_event["special_ressource_event"]), new EmptyEvent(this, Player.probas_ressource_event["empty_event"])];
         for (let event of possible_events) {
             let range_start = 0;
             for (let [range, existing_event] of this.events_probability_map.entries()) {
@@ -35,8 +35,6 @@ export default class Expedition {
             }
             this.events_probability_map.set([range_start, range_start + event.probability], event);
         }
-        // console.log(this.events_probability_map);
-        // this.events_probability_map.set([0,1], new HumanEvent(this));
     }
     
     getClassMap() {
@@ -107,10 +105,16 @@ export default class Expedition {
     processRessourcesAtReturn() {
         for (let [ressource, quantity] of this.ressources_collected.entries()) {
             if (ressource === "human") {
-                // Assuming Player has a method to add humans
                 Player.setNbHumanPerExpedition(Player.getNbHumanPerExpedition() + quantity);
             }
-            // Handle other ressources if needed
+
+            if(ressource === "attribute_point") {
+                Player.setAttributePoints(Player.getAttributePoints() + quantity);
+            }
+
+            if(ressource === "class") {
+                Player.setNbClassAvailable(Player.getNbClassAvailable() + quantity);
+            }
         }
     }
 }

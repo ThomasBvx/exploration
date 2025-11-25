@@ -12,6 +12,17 @@ export default class Player {
     static expeditions = [];
     static expeditionRunning = false;
 
+    static probas_special_ressource_event = {
+        "human": 0.3,
+        "attribute_point": 0.3,
+        "class": 0.4
+    };
+
+    static probas_ressource_event = {
+        "special_ressource_event": 0.3,
+        "empty_event": 0.7
+    };
+
     static getAttributePoints() {
         return this.attribute_points;
     }
