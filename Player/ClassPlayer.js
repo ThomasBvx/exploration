@@ -19,7 +19,12 @@ export default class Player {
     };
 
     static probas_ressource_event = {
-        "special_ressource_event": 0.3,
+        "stick": 1.0
+    };
+
+    static probas_event = {
+        "special_ressource_event": 0.05,
+        "ressource_event": 0.25,
         "empty_event": 0.7
     };
 

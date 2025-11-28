@@ -149,7 +149,7 @@ document.getElementById("start_expedition_button").addEventListener("click", () 
     }
 
     function displayRessources(){
-        ressources_of_expedition.innerHTML=``;
+        ressources_of_expedition.innerHTML='';
         for(const [ressource, quantity] of expedition.ressources_collected){
             if(ressource === "human"){
                 const ressource_human_div = document.createElement("div");

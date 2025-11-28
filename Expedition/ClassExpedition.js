@@ -3,6 +3,7 @@ import HumanEvent from "./Events/SpecialRessource/ClassHumanEvent.js";
 import EmptyEvent from "./Events/ClassEmptyEvent.js";
 import Player from "../Player/ClassPlayer.js";
 import SpecialRessourceEvent from "./Events/SpecialRessource/ClassSpecialRessourceEvent.js";
+import Camp from "../Camp/ClassCamp.js";
 
 export default class Expedition {
     class_map = new Map();
@@ -27,7 +28,10 @@ export default class Expedition {
     }
 
     populateEvents() {
-        let possible_events = [new SpecialRessourceEvent(this, Player.probas_ressource_event["special_ressource_event"]), new EmptyEvent(this, Player.probas_ressource_event["empty_event"])];
+        let possible_events = []
+        possible_events.push(new SpecialRessourceEvent(this, Player.probas_event["special_ressource_event"]))
+        possible_events.push(new HumanEvent(this, Player.probas_event["ressource_event"]));
+        possible_events.push(new EmptyEvent(this, Player.probas_event["empty_event"]));
         for (let event of possible_events) {
             let range_start = 0;
             for (let [range, existing_event] of this.events_probability_map.entries()) {
@@ -114,6 +118,9 @@ export default class Expedition {
 
             if(ressource === "class") {
                 Player.setNbClassAvailable(Player.getNbClassAvailable() + quantity);
+            }
+            else{
+                Camp.addRessource(ressource, quantity);
             }
         }
     }
